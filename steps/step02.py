@@ -25,8 +25,9 @@ class Square(Function):
     def forward(self, x):
         return x ** 2
     
-x = Variable(np.array(10))
-f = Square()
-y = f(x)
-print(type(y))
-print(y.data)
+if __name__ == "__main__":
+    x = Variable(np.array(10))
+    f = Square()
+    y = f(x)
+    print(type(y))
+    print(y.data)
