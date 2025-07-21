@@ -13,3 +13,37 @@ y = f(x)
 # 但是从用户的角度来看，分两步完成有点啰唆(虽然可以写成y=Square()(x)，但观感很差)
 # 用户更希望把DeZero的函数当作Python函数使用。为此，需要添加以下代码
 
+# 9.1 作为Python函数使用
+# 目的:  将DeZero的函数当作Python函数使用了
+def square(x: Variable):
+    f: Function = Square()
+    return f(x)
+
+def exp(x: Variable):
+    f = Exp()
+    return f(x)
+
+
+def square2(x: Variable):
+    return Square()(x)
+
+def exp2(x):
+    return Exp()(x)
+
+if __name__ == "__main__":
+    x = Variable(np.array(0.5))
+    a = square(x)
+    b = exp(a)
+    y = square(b)
+
+    y.grad = np.array(1.0)
+    y.backward()
+    print(b.grad)
+    print(a.grad)
+    print(x.grad)
+
+    x = Variable(np.array(0.5))
+    y = square(exp(square(x))) # 连续调用
+    y.grad = np.array(1.0)
+    y.backward()
+    print(x.grad)
